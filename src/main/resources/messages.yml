@@ -1,0 +1,38 @@
+general:
+  noPermission: "{prefix}&cYou do not have permission to do that!"
+  playerNotFound: "{prefix}&cPlayer &e{player} &cnot found!"
+  onlyConsole: "{prefix}&cThis command can only be executed by console!"
+  onlyPlayer: "{prefix}&cThis command can only be executed by players!"
+  unknownCommand: "{prefix}&cUnknown command. Type /help for help."
+  noSubCommand: "{prefix}&7Developed by &e[click:open_url:https://github.com/TheJokerDev]J0keer&7."
+  noTranslation: "{prefix}&cNo translation found for &e{key}&c."
+  cooldown: "{prefix}&cYou must wait &e{time} &cbefore using this again!"
+
+menus:
+  notExist: "{prefix}&cMenu &e{menu} &cdoes not exist!"
+
+commands:
+  xpillars:
+    reload:
+      usage: '&7/xpillars &breload'
+      success: "{prefix}&aConfiguration reloaded!"
+    setspawn:
+      usage: '&7/xpillars &bsetspawn'
+      success: "{prefix}&aSpawn set successfully!"
+    arena:
+      usage: '&7/xpillars &barena &a<create | delete | list | setspawn | setlobby | setexit | setregion>'
+    modify:
+      usage: '&7/xpillars &bmodify &a<player> &b<modifier> &a<value>'
+      success: "{prefix}&aModifier &e{modifier} &aset to &e{value}&a for &e{player}&a!"
+      notFound: "{prefix}&cModifier &e{modifier} &cnot found!"
+      invalidValue: "{prefix}&cInvalid {value} for modifier &e{modifier}&c!"
+
+placeholders:
+  date:
+    second: "%ss"
+    minute: "%sm,"
+    hour: "%sh,"
+    day: "%sd,"
+    week: "%sw,"
+    month: "%smth,"
+    year: "%sy,"

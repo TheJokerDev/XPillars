@@ -1,0 +1,14 @@
+name: XPillars
+version: '${version}'
+main: me.j0keer.xpillars.XPillars
+api-version: '1.16'
+
+softdepend:
+  - PlaceholderAPI
+
+libraries:
+  - 'com.github.cryptomorin:XSeries:${xseries_version}'
+  - 'org.projectlombok:lombok:${lombok_version}'
+  - 'fr.mrmicky:fastboard:${fastboard_version}'
+  - 'org.mariadb.jdbc:mariadb-java-client:${mariadb_version}'
+  - 'org.mongodb:mongo-java-driver:${mongo_version}'

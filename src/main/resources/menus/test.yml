@@ -1,0 +1,13 @@
+settings:
+  title: 'Test inventory for %player_name%'
+  rows: 3
+
+extra-items:
+  close:
+    material: BARRIER
+    name: '&cClose'
+    lore:
+      - '&7Click to close the inventory.'
+    slot: 26
+    action:
+      - '[close]'

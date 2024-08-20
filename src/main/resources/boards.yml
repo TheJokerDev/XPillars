@@ -1,0 +1,22 @@
+settings:
+  update: 1
+
+boards:
+  lobby:
+    title: '<gradient:green:blue><bold>XPillars</bold></gradient> &7(%server_online%)'
+    lines: |-
+      &7    %server_time_dd/MM/yyyy%
+      &f
+      &f • &eInfo
+      &f   &bNick: &a%player_name%
+      &f   &bCoins: &6%xpillars_money%
+      &f
+      &f • &eStatistics
+      &f   &bKills: &6⚔ %xpillars_kills%
+      &f   &bWins: &9🛡 %xpillars_wins%
+      &f   &bDeaths: &c💀 %xpillars_deaths%
+      &f   &bPlayed: &e⏱ %xpillars_time-played%
+      &f
+      &e yourserver.net
+  game:
+    //Todo

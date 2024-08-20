@@ -1,0 +1,14 @@
+settings:
+  debug: false
+  prefix: '&b&lXPillars &8» &7'
+
+database:
+  type: yaml
+  mysql:
+    host: localhost:3306
+    database: xpillars
+    user: root
+    password: 12345678
+  mongodb:
+    database: admin
+    uri: 'mongodb://localhost:27017'

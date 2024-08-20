@@ -1,0 +1,83 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version "${shadow_version}"
+}
+
+group = 'me.j0keer'
+version = '0.0.1-BETA'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+        name = "spigotmc-repo"
+        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+    }
+    maven {
+        name = "sonatype"
+        url = "https://oss.sonatype.org/content/groups/public/"
+    }
+    maven {
+        url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
+    }
+}
+
+dependencies {
+    compileOnly("org.spigotmc:spigot:${spigot_version}")
+
+    compileOnly "org.projectlombok:lombok:${lombok_version}"
+    annotationProcessor "org.projectlombok:lombok:${lombok_version}"
+    compileOnly("com.github.cryptomorin:XSeries:${xseries_version}")
+
+    implementation "net.kyori:adventure-text-minimessage:${adventure_text_minimessage_version}"
+    implementation "net.kyori:adventure-platform-bukkit:${adventure_platform_bukkit_version}"
+    implementation "dev.vankka:enhancedlegacytext:${enhancedlegacytext_version}"
+    implementation "fr.mrmicky:fastboard:${fastboard_version}"
+
+    compileOnly "org.mongodb:mongo-java-driver:${mongo_version}"
+    compileOnly "org.mariadb.jdbc:mariadb-java-client:${mariadb_version}"
+
+    compileOnly "me.clip:placeholderapi:${papi_version}"
+}
+
+def targetJavaVersion = 17
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+        options.release.set(targetJavaVersion)
+    }
+}
+
+processResources {
+    def props = [version                           : version,
+                 xseries_version                   : xseries_version,
+                 adventure_text_minimessage_version: adventure_text_minimessage_version,
+                 adventure_platform_bukkit_version : adventure_platform_bukkit_version,
+                 mariadb_version                   : mariadb_version,
+                 mongo_version                     : mongo_version,
+                 fastboard_version                 : fastboard_version,
+                 lombok_version                    : lombok_version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand props
+    }
+}
+
+shadowJar {
+    // Replace 'com.yourpackage' with the package of your plugin
+    relocate 'fr.mrmicky.fastboard', 'me.j0keer.api.fastboard'
+    relocate 'net.kyori.adventure', 'me.j0keer.api.adventure'
+    relocate 'com.zaxxer.hikari', 'me.j0keer.api.hikari'
+    archiveFileName = "${rootProject.name}-${version}.jar"
+}

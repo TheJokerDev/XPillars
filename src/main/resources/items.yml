@@ -1,0 +1,11 @@
+lobby:
+  diamond:
+    material: DIAMOND
+    meta:
+      name: '&bInfo'
+      lore:
+        - '&7Item info'
+    slot: 4
+    actions:
+      multiclick:
+        - '[msg] Hola pa'

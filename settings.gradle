@@ -1,0 +1,4 @@
+rootProject.name = 'XPillars'
+include 'API'
+include 'Tests'
+
