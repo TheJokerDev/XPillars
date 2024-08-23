@@ -19,10 +19,12 @@ public class ButtonClickEvent {
     public ButtonClickEvent(Event event) {
         this.event = event;
 
-        if (event instanceof PlayerInteractEvent interactEvent) {
+        if (event instanceof PlayerInteractEvent) {
+            PlayerInteractEvent interactEvent = (PlayerInteractEvent) event;
             player = interactEvent.getPlayer();
             actions.add(interactEvent.getAction().name());
-        } else if (event instanceof InventoryClickEvent clickEvent) {
+        } else if (event instanceof InventoryClickEvent) {
+            InventoryClickEvent clickEvent = (InventoryClickEvent) event;
             player = (Player) clickEvent.getWhoClicked();
             actions.add("LEFT_CLICK");
         } else {
@@ -31,9 +33,11 @@ public class ButtonClickEvent {
     }
 
     public void setCanceled(boolean canceled) {
-        if (event instanceof InventoryClickEvent clickEvent) {
+        if (event instanceof InventoryClickEvent) {
+            InventoryClickEvent clickEvent = (InventoryClickEvent) event;
             clickEvent.setCancelled(canceled);
-        } else if (event instanceof PlayerInteractEvent interactEvent) {
+        } else if (event instanceof PlayerInteractEvent) {
+            PlayerInteractEvent interactEvent = (PlayerInteractEvent) event;
             interactEvent.setCancelled(canceled);
         }
     }

@@ -66,7 +66,8 @@ public class SimpleItem implements Cloneable {
         this.data = itemStack.getDurability();
         if (itemStack.getItemMeta() != null && itemStack.hasItemMeta()) {
             ItemMeta meta = itemStack.getItemMeta();
-            if (meta instanceof SkullMeta skullMeta) {
+            if (meta instanceof SkullMeta) {
+                SkullMeta skullMeta = (SkullMeta) meta;
                 skinTexture = skullMeta.getOwner();
             }
             this.lore = meta.getLore();
@@ -347,7 +348,8 @@ public class SimpleItem implements Cloneable {
         } else {
             meta = item.getItemMeta();
         }
-        if (meta instanceof LeatherArmorMeta LMeta && this.color != null) {
+        if (meta instanceof LeatherArmorMeta && this.color != null) {
+            LeatherArmorMeta LMeta = (LeatherArmorMeta) meta;
             LMeta.setColor(this.color);
             item.setItemMeta(LMeta);
         }

@@ -20,10 +20,16 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public record LobbyListener(XPillars plugin) implements Listener {
-
+public class LobbyListener implements Listener {
+    private final XPillars plugin;
+    
+    public LobbyListener(XPillars plugin) {
+        this.plugin = plugin;
+    }
+    
     public void reload() {
         if (!plugin.getConfig().getBoolean("settings.lobbyListener", true)){
             HandlerList.unregisterAll(this);
@@ -35,33 +41,34 @@ public record LobbyListener(XPillars plugin) implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if (plugin().getSpawn() != null) {
-            player.teleport(plugin().getSpawn());
+        if (plugin.getSpawn() != null) {
+            player.teleport(plugin.getSpawn());
         }
     }
 
     @EventHandler
     public void onRespawn(PlayerSpawnLocationEvent event) {
         Player player = event.getPlayer();
-        if (plugin().getSpawn() != null) {
-            if (player.getWorld().equals(plugin().getSpawn().getWorld())) {
-                event.setSpawnLocation(plugin().getSpawn());
+        if (plugin.getSpawn() != null) {
+            if (player.getWorld().equals(plugin.getSpawn().getWorld())) {
+                event.setSpawnLocation(plugin.getSpawn());
             }
         }
     }
 
     @EventHandler
     public void onDamage(EntityDamageEvent event) {
-        if (event.getEntity() instanceof Player p) {
-            GamePlayer player = plugin().getPlayerManager().getPlayer(p);
+        if (event.getEntity() instanceof Player) {
+            Player p = (Player) event.getEntity();
+            GamePlayer player = plugin.getPlayerManager().getPlayer(p);
             event.setCancelled(!player.isPlaying());
         }
-        if (plugin().getSpawn() != null) {
-            if (event.getEntity().getWorld().equals(plugin().getSpawn().getWorld()) || event.getCause() == EntityDamageEvent.DamageCause.VOID) {
+        if (plugin.getSpawn() != null) {
+            if (event.getEntity().getWorld().equals(plugin.getSpawn().getWorld()) || event.getCause() == EntityDamageEvent.DamageCause.VOID) {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        event.getEntity().teleport(plugin().getSpawn());
+                        event.getEntity().teleport(plugin.getSpawn());
                     }
                 }.runTaskLater(plugin, 1L);
                 event.setCancelled(true);
@@ -71,8 +78,9 @@ public record LobbyListener(XPillars plugin) implements Listener {
 
     @EventHandler
     public void onDamageByEntity(EntityDamageByEntityEvent event) {
-        if (event.getEntity() instanceof Player p) {
-            GamePlayer player = plugin().getPlayerManager().getPlayer(p);
+        if (event.getEntity() instanceof Player) {
+            Player p = (Player) event.getEntity();
+            GamePlayer player = plugin.getPlayerManager().getPlayer(p);
             event.setCancelled(!player.isPlaying());
         }
     }
@@ -80,14 +88,14 @@ public record LobbyListener(XPillars plugin) implements Listener {
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
-        GamePlayer gamePlayer = plugin().getPlayerManager().getPlayer(player);
+        GamePlayer gamePlayer = plugin.getPlayerManager().getPlayer(player);
         event.setCancelled(gamePlayer.getGame() != null && !gamePlayer.isPlaying() || gamePlayer.getGame() == null && player.getGameMode() != GameMode.CREATIVE);
     }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
-        GamePlayer gamePlayer = plugin().getPlayerManager().getPlayer(player);
+        GamePlayer gamePlayer = plugin.getPlayerManager().getPlayer(player);
 
         event.setCancelled(gamePlayer.getGame() != null && !gamePlayer.isPlaying() || gamePlayer.getGame() == null && player.getGameMode() != GameMode.CREATIVE);
     }
@@ -95,20 +103,21 @@ public record LobbyListener(XPillars plugin) implements Listener {
     @EventHandler
     public void onInteractAtEntity(PlayerInteractAtEntityEvent event) {
         Player player = event.getPlayer();
-        GamePlayer gamePlayer = plugin().getPlayerManager().getPlayer(player);
+        GamePlayer gamePlayer = plugin.getPlayerManager().getPlayer(player);
         event.setCancelled(gamePlayer.getGame() != null && !gamePlayer.isPlaying() || gamePlayer.getGame() == null && player.getGameMode() != GameMode.CREATIVE);
     }
 
     @EventHandler
     public void onCreatureSpawn(CreatureSpawnEvent event) {
-        List<CreatureSpawnEvent.SpawnReason> allowedReasons = new ArrayList<>(List.of(CreatureSpawnEvent.SpawnReason.CUSTOM, CreatureSpawnEvent.SpawnReason.COMMAND));
-        event.setCancelled(plugin().getSpawn() != null && event.getEntity().getWorld().equals(plugin().getSpawn().getWorld()) && allowedReasons.contains(event.getSpawnReason()));
+        List<CreatureSpawnEvent.SpawnReason> allowedReasons = new ArrayList<>(Arrays.asList(CreatureSpawnEvent.SpawnReason.CUSTOM, CreatureSpawnEvent.SpawnReason.COMMAND));
+        event.setCancelled(plugin.getSpawn() != null && event.getEntity().getWorld().equals(plugin.getSpawn().getWorld()) && allowedReasons.contains(event.getSpawnReason()));
     }
 
     @EventHandler
     public void onFoodChange(FoodLevelChangeEvent event) {
-        if (event.getEntity() instanceof Player p) {
-            GamePlayer player = plugin().getPlayerManager().getPlayer(p);
+        if (event.getEntity() instanceof Player) {
+            Player p = (Player) event.getEntity();
+            GamePlayer player = plugin.getPlayerManager().getPlayer(p);
             if (!player.isPlaying()) {
                 event.getEntity().setFoodLevel(20);
                 event.setCancelled(true);

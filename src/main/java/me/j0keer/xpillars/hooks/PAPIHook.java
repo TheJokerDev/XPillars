@@ -39,25 +39,25 @@ public class PAPIHook extends PlaceholderExpansion {
         if (args.length == 1) {
             String one = args[0];
             switch (one.toLowerCase()) {
-                case "prefix" -> {
+                case "prefix": {
                     return getXPillars().getUtils().getPrefix();
                 }
-                case "money" -> {
+                case "money": {
                     return String.valueOf(gamePlayer.getMoney());
                 }
-                case "kills" -> {
+                case "kills": {
                     return String.valueOf(gamePlayer.getKills());
                 }
-                case "deaths" -> {
+                case "deaths": {
                     return String.valueOf(gamePlayer.getDeaths());
                 }
-                case "wins" -> {
+                case "wins": {
                     return String.valueOf(gamePlayer.getWins());
                 }
-                case "played" -> {
+                case "played": {
                     return String.valueOf(gamePlayer.getPlayed());
                 }
-                case "time-played" -> {
+                case "time-played": {
                     return getXPillars().getUtils().formatTime(gamePlayer.getPlayTime());
                 }
             }

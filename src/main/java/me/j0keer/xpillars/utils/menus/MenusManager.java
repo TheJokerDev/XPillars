@@ -38,7 +38,8 @@ public class MenusManager implements Listener {
 
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent event) {
-        if (event.getPlayer() instanceof Player p) {
+        if (event.getPlayer() instanceof Player) {
+            Player p = (Player) event.getPlayer();
             GamePlayer gamePlayer = getPlugin().getPlayer(p);
             for (Menu menu : gamePlayer.getMenus().values()) {
                 if (event.getView().getTitle().equals(menu.getTitle())) {
@@ -51,7 +52,8 @@ public class MenusManager implements Listener {
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
 
-        if (event.getPlayer() instanceof Player p) {
+        if (event.getPlayer() instanceof Player) {
+            Player p = (Player) event.getPlayer();
             GamePlayer gamePlayer = getPlugin().getPlayer(p);
             for (Menu menu : gamePlayer.getMenus().values()) {
                 if (event.getView().getTitle().equals(menu.getTitle())) {
@@ -65,7 +67,8 @@ public class MenusManager implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
 
-        if (event.getWhoClicked() instanceof Player p) {
+        if (event.getWhoClicked() instanceof Player) {
+            Player p = (Player) event.getWhoClicked();
             GamePlayer gamePlayer = getPlugin().getPlayer(p);
             for (Menu menu : gamePlayer.getMenus().values()) {
                 if (event.getView().getTitle().equals(menu.getTitle())) {

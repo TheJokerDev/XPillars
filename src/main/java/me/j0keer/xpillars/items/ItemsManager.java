@@ -21,10 +21,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Getter
 public class ItemsManager implements Listener {
@@ -54,7 +51,7 @@ public class ItemsManager implements Listener {
     public void loadItems() {
         buttons.clear();
 
-        List<String> keys = new ArrayList<>(List.of("lobby"));
+        List<String> keys = new ArrayList<>(Collections.singletonList("lobby"));
 
         for (String key : keys) {
             List<Button> list = new ArrayList<>();
@@ -147,7 +144,8 @@ public class ItemsManager implements Listener {
 
     @EventHandler
     public void onPick(EntityPickupItemEvent event) {
-        if (!(event.getEntity() instanceof Player p)) return;
+        if (!(event.getEntity() instanceof Player)) return;
+        Player p = (Player) event.getEntity();
         GamePlayer player = plugin.getPlayerManager().getPlayer(p);
 
         ItemStack item = event.getItem().getItemStack();
